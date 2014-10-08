@@ -1,5 +1,7 @@
-private package me.th3pf.plugins.duties;
+package me.th3pf.plugins.duties;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 
 import me.th3pf.plugins.duties.events.DutyModeDisabledEvent;
@@ -203,7 +205,6 @@ public class ModeSwitcher
 								.replaceAll("%PLAYER_NAME%", player.getName())
 								.replaceAll("%PLAYER_GAMEMODE%", player.getGameMode().toString());
 						player.performCommand(parsedCommand);
-						));
 					}
 					
 					return true;
@@ -584,7 +585,8 @@ public class ModeSwitcher
 						catch(Exception exception)
 						{
 							Duties.GetInstance().LogMessage("Failed while disabling temporary permissions: Not a valid permission node: '" + node.replaceAll("%PLAYER_NAME%", ModeSwitcher.this.player.getName()));
-							Duties.GetInstance().LogMessage("Error occured: " +  exception.getMessage() + ". Ignoring it!");
+							Duties.GetInstance().LogMessage("Error occured: " +  exception.toString() + ". Ignoring it!");
+							Duties.GetInstance().LogMessage("Exception stack: " + getExceptionTrace(exception));
 						}
 							
 						count++;
@@ -611,7 +613,6 @@ public class ModeSwitcher
 								.replaceAll("%PLAYER_NAME%", player.getName())
 								.replaceAll("%PLAYER_GAMEMODE%", player.getGameMode().toString());
 						player.performCommand(parsedCommand);
-						));
 					}
 					
 					return true;
@@ -622,6 +623,22 @@ public class ModeSwitcher
 					return false;
 				}
 			}
+
+    public String getExceptionTrace(Exception ex) {
+      if (ex == null) {
+        return "";
+      }
+      String output = null;
+      StringWriter writer = new StringWriter();
+      PrintWriter printer = new PrintWriter(writer);
+      try {
+        ex.printStackTrace(printer);
+        output = writer.toString();
+      } finally {
+        printer.close();
+      }
+      return output;
+    }
 
 			public boolean CommandsByConsole() 
 			{
