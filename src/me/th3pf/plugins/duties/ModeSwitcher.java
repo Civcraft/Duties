@@ -26,6 +26,22 @@ public class ModeSwitcher
 	{
 		this.player = player;
 	}
+
+    public static String getExceptionTrace(Exception ex) {
+      if (ex == null) {
+        return "";
+      }
+      String output = null;
+      StringWriter writer = new StringWriter();
+      PrintWriter printer = new PrintWriter(writer);
+      try {
+        ex.printStackTrace(printer);
+        output = writer.toString();
+      } finally {
+        printer.close();
+      }
+      return output;
+    }
 	
 	public boolean EnableDutyMode()
 	{
@@ -400,7 +416,8 @@ public class ModeSwitcher
 						catch(Exception exception)
 						{
 							Duties.GetInstance().LogMessage("Failed while enabling temporary permissions: Not a valid permission node: '" + node.replaceAll("%PLAYER_NAME%", ModeSwitcher.this.player.getName()));
-							Duties.GetInstance().LogMessage("Error occured: " +  exception.getMessage() + ". Ignoring it!");
+							Duties.GetInstance().LogMessage("Error occured: " +  exception.toString() + ". Ignoring it!");
+							Duties.GetInstance().LogMessage("Exception stack: " + ModeSwitcher.getExceptionTrace(exception));
 						}
 					}
 					
@@ -586,7 +603,7 @@ public class ModeSwitcher
 						{
 							Duties.GetInstance().LogMessage("Failed while disabling temporary permissions: Not a valid permission node: '" + node.replaceAll("%PLAYER_NAME%", ModeSwitcher.this.player.getName()));
 							Duties.GetInstance().LogMessage("Error occured: " +  exception.toString() + ". Ignoring it!");
-							Duties.GetInstance().LogMessage("Exception stack: " + getExceptionTrace(exception));
+							Duties.GetInstance().LogMessage("Exception stack: " + ModeSwitcher.getExceptionTrace(exception));
 						}
 							
 						count++;
@@ -623,22 +640,6 @@ public class ModeSwitcher
 					return false;
 				}
 			}
-
-    public String getExceptionTrace(Exception ex) {
-      if (ex == null) {
-        return "";
-      }
-      String output = null;
-      StringWriter writer = new StringWriter();
-      PrintWriter printer = new PrintWriter(writer);
-      try {
-        ex.printStackTrace(printer);
-        output = writer.toString();
-      } finally {
-        printer.close();
-      }
-      return output;
-    }
 
 			public boolean CommandsByConsole() 
 			{
