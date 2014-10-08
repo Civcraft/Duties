@@ -30,7 +30,7 @@ public class Duties extends JavaPlugin
 	public PluginDescriptionFile PDFile;
 	public static Configuration.Main Config;
 	public static Configuration.Messages Messages;
-	public static HashMap<String, Memory> Memories = new HashMap<String, Memory>();
+	public static HashMap<UUID, Memory> Memories = new HashMap<UUID, Memory>();
 	public static List<Player> Hidden = new ArrayList<Player>();
 	public static HashMap<String, Long> LastChestReminderTime = new HashMap<String, Long>();
 	public static HashMap<String, Long> LastDropReminderTime = new HashMap<String, Long>();
@@ -83,29 +83,29 @@ public class Duties extends JavaPlugin
 	{	
 		this.getServer().savePlayers();
 		
-		ArrayList<String>keySet = new ArrayList<String>();
+		ArrayList<UUID>keySet = new ArrayList<UUID>();
 		keySet.addAll(Memories.keySet());
 		
 		if((Config.GetBoolean("KeepStateOffline")))
 		{
-			for(String playerName : keySet)
+			for(UUID playerID : keySet)
 			{
-				if(Duties.GetInstance().getServer().getOfflinePlayer(playerName).isOnline())
+				if(Duties.GetInstance().getServer().getOfflinePlayer(playerID).isOnline())
 				{
-					if(!new ModeSwitcher(Duties.GetInstance().getServer().getPlayerExact(playerName)).DisableDutyMode())
+					if(!new ModeSwitcher(Duties.GetInstance().getServer().getPlayer(playerID)).DisableDutyMode())
 					{
-						LogMessage("Couldn't disable duty mode for " + playerName + ".");
+						LogMessage("Couldn't disable duty mode for " + Duties.GetInstance().getServer().getPlayer(playerID).getName() + ".");
 					}
 				}
 				else
 				{
 					
-					Player player = Memories.get(playerName).Player;
+					Player player = Memories.get(Duties.GetInstance().getServer().getPlayer(playerID).getName()).Player;
 					
 					player.loadData();
 					if(!new ModeSwitcher(player).DisableDutyMode())
 					{
-						LogMessage("Dutymode inactivation for " + playerName + " couldn't complete. Sorry for the inconvience.");
+						LogMessage("Dutymode inactivation for " + Duties.GetInstance().getServer().getPlayer(playerID).getName() + " couldn't complete. Sorry for the inconvience.");
 					}
 					player.saveData();
 				}
@@ -113,11 +113,11 @@ public class Duties extends JavaPlugin
 		}
 		else
 		{
-			for(String playerName : keySet)
+			for(UUID playerID : keySet)
 			{
-				if(!new ModeSwitcher(Duties.GetInstance().getServer().getPlayerExact(playerName)).DisableDutyMode())
+				if(!new ModeSwitcher(Duties.GetInstance().getServer().getPlayer(playerID)).DisableDutyMode())
 				{
-					LogMessage("Dutymode inactivation for " + playerName + " couldn't complete. Sorry for the inconvience.");
+					LogMessage("Dutymode inactivation for " + Duties.GetInstance().getServer().getPlayer(playerID).getName() + " couldn't complete. Sorry for the inconvience.");
 				}
 			}
 		}

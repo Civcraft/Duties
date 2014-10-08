@@ -1,6 +1,7 @@
 package me.th3pf.plugins.duties.commandexecutors;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import me.th3pf.plugins.duties.ModeSwitcher;
 import me.th3pf.plugins.duties.Duties;
@@ -25,7 +26,7 @@ public class DutymodeCommandExecutor implements CommandExecutor
 				{
 					ModeSwitcher actions = new ModeSwitcher((Player)sender);
 				
-					if(!Duties.Memories.containsKey(((Player)sender).getName()))
+					if(!Duties.Memories.containsKey(((Player)sender).getUniqueId()))
 					{
 						TellSender(sender,updates.Enable,actions.EnableDutyMode());
 					}
@@ -78,7 +79,7 @@ public class DutymodeCommandExecutor implements CommandExecutor
 					
 					ModeSwitcher actions = new ModeSwitcher(Duties.GetInstance().getServer().getPlayer(args[1]).getPlayer());
 					
-					if(!Duties.Memories.containsKey(Duties.GetInstance().getServer().getPlayer(args[1]).getName()))
+					if(!Duties.Memories.containsKey(Duties.GetInstance().getServer().getPlayer(args[1]).getUniqueId()))
 					{
 						TellSender(sender,updates.EnableOfOther,actions.EnableDutyMode());
 					}
@@ -97,7 +98,7 @@ public class DutymodeCommandExecutor implements CommandExecutor
 					if(!sender.hasPermission("duties.self.toggle") && !(Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(sender, "duties.self.toggle"))){TellSender(sender,updates.MissingPermission,true); return true;}
 					ModeSwitcher actions = new ModeSwitcher((Player)sender);
 					
-					if(!Duties.Memories.containsKey(((Player)sender).getName()))
+					if(!Duties.Memories.containsKey(((Player)sender).getUniqueId()))
 					{
 						TellSender(sender,updates.Enable,actions.EnableDutyMode());
 					}
@@ -149,7 +150,7 @@ public class DutymodeCommandExecutor implements CommandExecutor
 						return true;
 					}
 					
-					if(Duties.Memories.containsKey(Duties.GetInstance().getServer().getPlayer(args[1]).getName()))
+					if(Duties.Memories.containsKey(Duties.GetInstance().getServer().getPlayer(args[1]).getUniqueId()))
 					{
 						TellSender(sender, updates.AlreadyOn, false);
 						return true;
@@ -163,7 +164,7 @@ public class DutymodeCommandExecutor implements CommandExecutor
 				
 				//Own mode
 				if(!sender.hasPermission("duties.self.enable") && !(Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(sender, "duties.self.enable"))){TellSender(sender,updates.MissingPermission,true); return true;}
-				if(!Duties.Memories.containsKey(((Player)sender).getName()))
+				if(!Duties.Memories.containsKey(((Player)sender).getUniqueId()))
 				{
 					TellSender(sender, updates.AlreadyOn, false);
 					return true;
@@ -216,7 +217,7 @@ public class DutymodeCommandExecutor implements CommandExecutor
 						return true;
 					}
 					
-					if(!Duties.Memories.containsKey(Duties.GetInstance().getServer().getPlayer(args[1]).getName()))
+					if(!Duties.Memories.containsKey(Duties.GetInstance().getServer().getPlayer(args[1]).getUniqueId()))
 					{
 						TellSender(sender, updates.AlreadyOff, false);
 						return true;
@@ -231,7 +232,7 @@ public class DutymodeCommandExecutor implements CommandExecutor
 				
 				//Own mode
 				if(!sender.hasPermission("duties.self.disable") && !(Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(sender, "duties.self.disable"))){TellSender(sender,updates.MissingPermission,true); return true;}
-				if(!Duties.Memories.containsKey(((Player)sender).getName()))
+				if(!Duties.Memories.containsKey(((Player)sender).getUniqueId()))
 				{
 					TellSender(sender, updates.AlreadyOff, false);
 					return true;
@@ -262,14 +263,14 @@ public class DutymodeCommandExecutor implements CommandExecutor
 			
 			String players = "";
 			
-			for(String playerName : Duties.Memories.keySet())
+			for(UUID playerID : Duties.Memories.keySet())
 			{
-				if(!Duties.GetInstance().getServer().getPlayerExact(playerName).hasPermission("duties.belisted") && !(Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(Duties.GetInstance().getServer().getPlayerExact(playerName), "duties.belisted"))){continue;}
+				if(!Duties.GetInstance().getServer().getPlayer(playerID).hasPermission("duties.belisted") && !(Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(Duties.GetInstance().getServer().getPlayer(playerID), "duties.belisted"))){continue;}
 				
-				String formattedName = playerName;
+				String formattedName = Duties.GetInstance().getServer().getPlayer(playerID).getName();
 				if(Duties.Config.GetBoolean("Vault.NameFormatting") && Duties.GetInstance().getServer().getPluginManager().isPluginEnabled("Vault"))
 				{
-					formattedName = (Duties.VaultAdapter.chat.getPlayerPrefix(Duties.GetInstance().getServer().getPlayerExact(playerName)) + formattedName + Duties.VaultAdapter.chat.getPlayerSuffix(Duties.GetInstance().getServer().getPlayerExact(playerName)));
+					formattedName = (Duties.VaultAdapter.chat.getPlayerPrefix(Duties.GetInstance().getServer().getPlayer(playerID)) + formattedName + Duties.VaultAdapter.chat.getPlayerSuffix(Duties.GetInstance().getServer().getPlayer(playerID)));
 				}
 				
 				players += (formattedName) + ChatColor.WHITE+ ", ";
@@ -293,14 +294,14 @@ public class DutymodeCommandExecutor implements CommandExecutor
 			
 			String players = "";
 			
-			for(String playerName : Duties.Memories.keySet())
+			for(UUID playerID : Duties.Memories.keySet())
 			{
 				//if(!player.hasPermission("duties.belisted"))continue;
 				
-				String formattedName = playerName;
+				String formattedName = Duties.GetInstance().getServer().getPlayer(playerID).getName();
 				if(Duties.Config.GetBoolean("Vault.NameFormatting") && Duties.GetInstance().getServer().getPluginManager().isPluginEnabled("Vault"))
 				{
-					formattedName = (Duties.VaultAdapter.chat.getPlayerPrefix(Duties.GetInstance().getServer().getPlayerExact(playerName)) + formattedName + Duties.VaultAdapter.chat.getPlayerSuffix(Duties.GetInstance().getServer().getPlayerExact(playerName)));
+					formattedName = (Duties.VaultAdapter.chat.getPlayerPrefix(Duties.GetInstance().getServer().getPlayer(playerID)) + formattedName + Duties.VaultAdapter.chat.getPlayerSuffix(Duties.GetInstance().getServer().getPlayer(playerID)));
 				}
 				
 				players += (formattedName) + ChatColor.WHITE+ ", ";
@@ -442,16 +443,16 @@ public class DutymodeCommandExecutor implements CommandExecutor
 		{
 			if(!sender.hasPermission("duties.purge") && !(Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(sender, "duties.purge"))){TellSender(sender,updates.MissingPermission,true); return true;}
 			
-			ArrayList<String>keySet = new ArrayList<String>();
+			ArrayList<UUID>keySet = new ArrayList<UUID>();
 			keySet.addAll(Duties.Memories.keySet());
 			
-			for(String playerName : keySet)
+			for(UUID playerID : keySet)
 			{
-				if(!Duties.GetInstance().getServer().getPlayerExact(playerName).isOnline()){Duties.GetInstance().LogMessage("Player " + playerName + " is offline and can therefore not be put off duty mode."); continue;}
+				if(!Duties.GetInstance().getServer().getPlayer(playerID).isOnline()){Duties.GetInstance().LogMessage("Player " + Duties.GetInstance().getServer().getPlayer(playerID).getName() + " is offline and can therefore not be put off duty mode."); continue;}
 				
-				if(!new ModeSwitcher(Duties.GetInstance().getServer().getPlayerExact(playerName)).DisableDutyMode())
+				if(!new ModeSwitcher(Duties.GetInstance().getServer().getPlayer(playerID)).DisableDutyMode())
 				{
-					Duties.GetInstance().LogMessage("Couldn't disable duty mode for " + playerName + ".");
+					Duties.GetInstance().LogMessage("Couldn't disable duty mode for " + Duties.GetInstance().getServer().getPlayer(playerID).getName() + ".");
 				}
 			}
 			

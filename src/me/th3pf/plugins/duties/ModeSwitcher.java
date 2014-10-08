@@ -359,7 +359,7 @@ public class ModeSwitcher
 				
 				try
 				{	
-					Duties.Memories.get(ModeSwitcher.this.player.getName()).TemporaryPermissions = new ArrayList<PermissionAttachment>();		
+					Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).TemporaryPermissions = new ArrayList<PermissionAttachment>();		
 					
 					for(String node : Duties.Config.GetStringList("Actions.TemporaryPermissions"))
 					{
@@ -393,7 +393,7 @@ public class ModeSwitcher
 								if(!player.isOnline()){return true;}
 								else
 								{
-									Duties.Memories.get(ModeSwitcher.this.player).TemporaryPermissions.add(ModeSwitcher.this.player.addAttachment(Duties.GetInstance(),node.split(": ")[0].replaceAll("%PLAYER_NAME%", ModeSwitcher.this.player.getName()), Boolean.parseBoolean(node.split(": ")[1])));
+									Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).TemporaryPermissions.add(ModeSwitcher.this.player.addAttachment(Duties.GetInstance(),node.split(": ")[0].replaceAll("%PLAYER_NAME%", ModeSwitcher.this.player.getName()), Boolean.parseBoolean(node.split(": ")[1])));
 								}
 							}
 						}
@@ -418,7 +418,7 @@ public class ModeSwitcher
 				//Importing to memory
 				try
 				{
-					Duties.Memories.put(player.getName(), new Memory(player,0));
+					Duties.Memories.put(player.getUniqueId(), new Memory(player,0));
 					return true;
 				}
 				catch(Exception exception)
@@ -488,7 +488,7 @@ public class ModeSwitcher
 				//Removes player data from memory
 				try
 				{
-					Duties.Memories.remove(ModeSwitcher.this.player.getName());
+					Duties.Memories.remove(ModeSwitcher.this.player.getUniqueId());
 					return true;
 				}
 				catch(Exception exception)
@@ -578,7 +578,7 @@ public class ModeSwitcher
 								if(!player.isOnline()){return true;}
 								else
 								{
-									ModeSwitcher.this.player.removeAttachment(Duties.Memories.get(player).TemporaryPermissions.get(count));
+									ModeSwitcher.this.player.removeAttachment(Duties.Memories.get(player.getUniqueId()).TemporaryPermissions.get(count));
 								}
 							}
 						}
@@ -671,42 +671,42 @@ public class ModeSwitcher
 					if(ModeSwitcher.this.player.isInsideVehicle())ModeSwitcher.this.player.getVehicle().eject();
 					
 					if(Duties.Config.GetBoolean("PreventTeleportCollision")) //Teleporting in to blocks fix, suggested by @riddle
-						Duties.Memories.get(ModeSwitcher.this.player.getName()).Location.setY( Duties.Memories.get(ModeSwitcher.this.player.getName()).Location.getY() +1 );
+						Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Location.setY( Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Location.getY() +1 );
 					
-					ModeSwitcher.this.player.teleport(Duties.Memories.get(ModeSwitcher.this.player.getName()).Location);
-					if(Duties.Memories.get(ModeSwitcher.this.player.getName()).Vehicle != null){Duties.Memories.get(ModeSwitcher.this.player.getName()).Vehicle.setPassenger(ModeSwitcher.this.player);}
-					ModeSwitcher.this.player.setVelocity(Duties.Memories.get(ModeSwitcher.this.player.getName()).Velocity);
-					ModeSwitcher.this.player.setGameMode(Duties.Memories.get(ModeSwitcher.this.player.getName()).GameMode);
+					ModeSwitcher.this.player.teleport(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Location);
+					if(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Vehicle != null){Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Vehicle.setPassenger(ModeSwitcher.this.player);}
+					ModeSwitcher.this.player.setVelocity(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Velocity);
+					ModeSwitcher.this.player.setGameMode(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).GameMode);
 					ModeSwitcher.this.player.getInventory().clear();
-					ModeSwitcher.this.player.getInventory().setContents(Duties.Memories.get(ModeSwitcher.this.player.getName()).Inventory);
-					ModeSwitcher.this.player.getInventory().setArmorContents(Duties.Memories.get(ModeSwitcher.this.player.getName()).Armor);
-					ModeSwitcher.this.player.setExhaustion(Duties.Memories.get(ModeSwitcher.this.player.getName()).Exhaustion);
-					ModeSwitcher.this.player.setSaturation(Duties.Memories.get(ModeSwitcher.this.player.getName()).Saturation);
-					ModeSwitcher.this.player.setFoodLevel(Duties.Memories.get(ModeSwitcher.this.player.getName()).FoodLevel);
-					ModeSwitcher.this.player.setHealth(Duties.Memories.get(ModeSwitcher.this.player.getName()).Health);
-					ModeSwitcher.this.player.setLevel(Duties.Memories.get(ModeSwitcher.this.player.getName()).Level);
-					ModeSwitcher.this.player.setExp(Duties.Memories.get(ModeSwitcher.this.player.getName()).Experience);
-					ModeSwitcher.this.player.setRemainingAir(Duties.Memories.get(ModeSwitcher.this.player.getName()).RemainingAir);
-					ModeSwitcher.this.player.setFallDistance(Duties.Memories.get(ModeSwitcher.this.player.getName()).FallDistance);
-					ModeSwitcher.this.player.setFireTicks(Duties.Memories.get(ModeSwitcher.this.player.getName()).FireTicks);
+					ModeSwitcher.this.player.getInventory().setContents(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Inventory);
+					ModeSwitcher.this.player.getInventory().setArmorContents(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Armor);
+					ModeSwitcher.this.player.setExhaustion(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Exhaustion);
+					ModeSwitcher.this.player.setSaturation(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Saturation);
+					ModeSwitcher.this.player.setFoodLevel(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).FoodLevel);
+					ModeSwitcher.this.player.setHealth(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Health);
+					ModeSwitcher.this.player.setLevel(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Level);
+					ModeSwitcher.this.player.setExp(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).Experience);
+					ModeSwitcher.this.player.setRemainingAir(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).RemainingAir);
+					ModeSwitcher.this.player.setFallDistance(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).FallDistance);
+					ModeSwitcher.this.player.setFireTicks(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).FireTicks);
 					for(PotionEffect potionEffect : ModeSwitcher.this.player.getActivePotionEffects())
 					{
 						ModeSwitcher.this.player.removePotionEffect(potionEffect.getType()); 
 						
 						//PotionEffectRemoval.removeMobEffect(ModeSwitcher.this.player, potionEffect.getType().getId());
 					}
-					ModeSwitcher.this.player.addPotionEffects(Duties.Memories.get(ModeSwitcher.this.player.getName()).PotionEffects);
+					ModeSwitcher.this.player.addPotionEffects(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).PotionEffects);
 					
 					//Duties.GetInstance().LogMessage("Reached before bed spawn loc.");
 					
-					if(Duties.Memories.get(ModeSwitcher.this.player.getName()).BedSpawnLocation != null && ModeSwitcher.this.player.getBedSpawnLocation() != null &&  ! Duties.Memories.get(ModeSwitcher.this.player.getName()).BedSpawnLocation.equals(ModeSwitcher.this.player.getBedSpawnLocation()) )
+					if(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).BedSpawnLocation != null && ModeSwitcher.this.player.getBedSpawnLocation() != null &&  ! Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).BedSpawnLocation.equals(ModeSwitcher.this.player.getBedSpawnLocation()) )
 					{
 						//Broken since CB 1.4.7-RX.X
 						ModeSwitcher.this.player.setBedSpawnLocation(
-								Duties.Memories.get(ModeSwitcher.this.player.getName()).BedSpawnLocation);
+								Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).BedSpawnLocation);
 					}
 					
-					ModeSwitcher.this.player.setTicksLived(Duties.Memories.get(ModeSwitcher.this.player.getName()).TicksLived);
+					ModeSwitcher.this.player.setTicksLived(Duties.Memories.get(ModeSwitcher.this.player.getUniqueId()).TicksLived);
 					
 					return true;
 				}
