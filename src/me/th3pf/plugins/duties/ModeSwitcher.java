@@ -16,7 +16,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.Vector;
-import org.kitteh.tag.TagAPI;
 
 public class ModeSwitcher
 {
@@ -76,9 +75,6 @@ public class ModeSwitcher
 				else if(module.equalsIgnoreCase("Messages")){if(!modules.Messages()){fail = true;};}
 				else if(module.equalsIgnoreCase("Broadcast")){if(!modules.Broadcast()){fail = true;};}
 			}
-
-			if(Duties.GetInstance().pluginManager.isPluginEnabled("TagAPI") && this.player.isOnline())
-				TagAPI.refreshPlayer(this.player);
 			
 			//Returns that duty mode activation failed
 			if(fail == true)
@@ -130,9 +126,6 @@ public class ModeSwitcher
 				else if(module.equalsIgnoreCase("Messages")){if(!modules.Messages()){fail = true;};}
 				else if(module.equalsIgnoreCase("Broadcast")){if(!modules.Broadcast()){fail = true;};}
 			}
-			
-			if(Duties.GetInstance().pluginManager.isPluginEnabled("TagAPI") && this.player.isOnline())
-				TagAPI.refreshPlayer(this.player);
 			
 			//Returns that duty mode inactivation failed
 			if(fail == true)

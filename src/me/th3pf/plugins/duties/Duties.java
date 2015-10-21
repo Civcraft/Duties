@@ -9,7 +9,6 @@ import me.th3pf.plugins.duties.listeners.PlayerInteractListener;
 import me.th3pf.plugins.duties.listeners.PlayerJoinListener;
 import me.th3pf.plugins.duties.listeners.PlayerQuitListener;
 import me.th3pf.plugins.duties.listeners.RemindListener;
-import me.th3pf.plugins.duties.listeners.TagAPIListener;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -65,11 +64,6 @@ public class Duties extends JavaPlugin
 		pluginManager.registerEvents(new PlayerInteractListener(), this);
 		pluginManager.registerEvents(new EntityDeathListener(), this);
 		pluginManager.registerEvents(new RemindListener(), this);
-		
-		if(pluginManager.isPluginEnabled("TagAPI")){
-			pluginManager.registerEvents(new TagAPIListener(), this);
-			Duties.GetInstance().LogMessage("TagAPI hooked.");
-		}
 		
 		if(Config.GetBoolean("KeepStateOffline"))
 		{pluginManager.registerEvents(new PlayerJoinListener(), this);}
