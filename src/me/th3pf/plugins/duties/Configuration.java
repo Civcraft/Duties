@@ -43,11 +43,11 @@ public class Configuration
 			output.put("Actions.DenyDesiredDrops", true);
 			output.put("Actions.DenyChestInteracts", true);
 			output.put("Actions.RemindPlayers", true);
-			output.put("Actions.Requirements.Dependencies", Arrays.asList(new String[]{"Vault", "TagAPI"}));
+			output.put("Actions.Requirements.Dependencies", Arrays.asList(new String[]{"Vault"}));
 			output.put("Actions.NameTagPrefix", "&4!&f");
 			output.put("Actions.NameTagSuffix", "&4!&f");
 			
-			output.put("Vault.Permissions", true);
+			output.put("Vault.Permissions", false);
 			output.put("Vault.NameFormatting", false);
 			output.put("Vault.Economy", false);
 

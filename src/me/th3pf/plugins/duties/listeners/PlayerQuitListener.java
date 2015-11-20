@@ -13,7 +13,7 @@ public class PlayerQuitListener implements Listener{
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerQuit(PlayerQuitEvent event) 
 	{
-		if(!Duties.Memories.containsKey(event.getPlayer().getName())){return;}
+		if(!Duties.Memories.containsKey(event.getPlayer().getUniqueId())){return;}
 		
 		new ModeSwitcher(event.getPlayer()).DisableDutyMode();
 	}

@@ -31,8 +31,8 @@ public class Duties extends JavaPlugin
 	public static Configuration.Messages Messages;
 	public static HashMap<UUID, Memory> Memories = new HashMap<UUID, Memory>();
 	public static List<Player> Hidden = new ArrayList<Player>();
-	public static HashMap<String, Long> LastChestReminderTime = new HashMap<String, Long>();
-	public static HashMap<String, Long> LastDropReminderTime = new HashMap<String, Long>();
+	public static HashMap<UUID, Long> LastChestReminderTime = new HashMap<UUID, Long>();
+	public static HashMap<UUID, Long> LastDropReminderTime = new HashMap<UUID, Long>();
 	public static HashMap<Plugin,String> Addons = new HashMap<Plugin,String>();
 	public static VaultAdapter VaultAdapter;
 	public static boolean latestEventCancelled = false;
@@ -94,7 +94,7 @@ public class Duties extends JavaPlugin
 				else
 				{
 					
-					Player player = Memories.get(Duties.GetInstance().getServer().getPlayer(playerID).getName()).Player;
+					Player player = Memories.get(playerID).Player;
 					
 					player.loadData();
 					if(!new ModeSwitcher(player).DisableDutyMode())
