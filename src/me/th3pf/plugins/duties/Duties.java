@@ -9,7 +9,6 @@ import me.th3pf.plugins.duties.listeners.PlayerInteractListener;
 import me.th3pf.plugins.duties.listeners.PlayerJoinListener;
 import me.th3pf.plugins.duties.listeners.PlayerQuitListener;
 import me.th3pf.plugins.duties.listeners.RemindListener;
-import me.th3pf.plugins.duties.listeners.TagAPIListener;
 
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -32,8 +31,8 @@ public class Duties extends JavaPlugin
 	public static Configuration.Messages Messages;
 	public static HashMap<UUID, Memory> Memories = new HashMap<UUID, Memory>();
 	public static List<Player> Hidden = new ArrayList<Player>();
-	public static HashMap<String, Long> LastChestReminderTime = new HashMap<String, Long>();
-	public static HashMap<String, Long> LastDropReminderTime = new HashMap<String, Long>();
+	public static HashMap<UUID, Long> LastChestReminderTime = new HashMap<UUID, Long>();
+	public static HashMap<UUID, Long> LastDropReminderTime = new HashMap<UUID, Long>();
 	public static HashMap<Plugin,String> Addons = new HashMap<Plugin,String>();
 	public static VaultAdapter VaultAdapter;
 	public static boolean latestEventCancelled = false;
@@ -66,11 +65,6 @@ public class Duties extends JavaPlugin
 		pluginManager.registerEvents(new EntityDeathListener(), this);
 		pluginManager.registerEvents(new RemindListener(), this);
 		
-		if(pluginManager.isPluginEnabled("TagAPI")){
-			pluginManager.registerEvents(new TagAPIListener(), this);
-			Duties.GetInstance().LogMessage("TagAPI hooked.");
-		}
-		
 		if(Config.GetBoolean("KeepStateOffline"))
 		{pluginManager.registerEvents(new PlayerJoinListener(), this);}
 		else
@@ -100,7 +94,7 @@ public class Duties extends JavaPlugin
 				else
 				{
 					
-					Player player = Memories.get(Duties.GetInstance().getServer().getPlayer(playerID).getName()).Player;
+					Player player = Memories.get(playerID).Player;
 					
 					player.loadData();
 					if(!new ModeSwitcher(player).DisableDutyMode())

@@ -16,24 +16,23 @@ public class PlayerInteractListener implements Listener{
 		
 		if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR)
 			return;
-		
+
 		if( ! ( (event.getClickedBlock().getType() == Material.CHEST) 
 			 || (event.getClickedBlock().getType() == Material.TRAPPED_CHEST) 
 			 || (event.getClickedBlock().getType() == Material.ENDER_CHEST)
 			  )
 		  )return;
-		
+
 		if(!Duties.Config.GetBoolean("Actions.DenyChestInteracts"))
 			return;
-		
-		if(!Duties.Memories.containsKey(event.getPlayer().getName())) 
+
+		if(!Duties.Memories.containsKey(event.getPlayer().getUniqueId())) 
 			return;
-		
+
 		if( (event.getPlayer().hasPermission("duties.bypass.chestinteracts") 
 				|| (Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(event.getPlayer(), "duties.bypass.chestinteracts"))) )
 			return;
-			
-		
+
 		event.setCancelled(true);
 		Duties.latestEventCancelled = true;
 	}

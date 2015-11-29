@@ -21,7 +21,7 @@ public class RemindListener implements Listener
 		
 		if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR){return;}
 		
-		if(!Duties.Memories.containsKey(event.getPlayer().getName())){return;}
+		if(!Duties.Memories.containsKey(event.getPlayer().getUniqueId())){return;}
 		
 		if(!Duties.Config.GetBoolean("Actions.RemindPlayers")){return;}
 
@@ -38,21 +38,21 @@ public class RemindListener implements Listener
 			return;
 		
 		//event.getPlayer().sendMessage("Last drop time: " + Duties.LastChestReminderTime + " ; Now: " + event.getPlayer().getWorld().getTime());
-		if(!Duties.LastChestReminderTime.containsKey(event.getPlayer().getName()))
-			Duties.LastChestReminderTime.put(event.getPlayer().getName(), new Integer(0).longValue());
+		if(!Duties.LastChestReminderTime.containsKey(event.getPlayer().getUniqueId()))
+			Duties.LastChestReminderTime.put(event.getPlayer().getUniqueId(), new Integer(0).longValue());
 		if(Duties.Config.GetInteger("ReminderCooldown").longValue() != 0)
-			if( ( event.getPlayer().getWorld().getTime() - Duties.LastChestReminderTime.get(event.getPlayer().getName()) ) <= Duties.Config.GetInteger("ReminderCooldown").longValue() ){return;}
+			if( ( event.getPlayer().getWorld().getTime() - Duties.LastChestReminderTime.get(event.getPlayer().getUniqueId()) ) <= Duties.Config.GetInteger("ReminderCooldown").longValue() ){return;}
 		
 		event.getPlayer().sendMessage(Duties.Messages.GetString("Client.Tag") + Duties.Messages.GetString("Client.Reminder.ChestOpen"));
 		
-		Duties.LastChestReminderTime.put(event.getPlayer().getName(), event.getPlayer().getWorld().getTime());
+		Duties.LastChestReminderTime.put(event.getPlayer().getUniqueId(), event.getPlayer().getWorld().getTime());
 	}
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerDropItem(PlayerDropItemEvent event) 
 	{
 		
-		if(!Duties.Memories.containsKey(event.getPlayer().getName())){return;}
+		if(!Duties.Memories.containsKey(event.getPlayer().getUniqueId())){return;}
 		
 		if(!Duties.Config.GetBoolean("Actions.RemindPlayers")){return;}
 		
@@ -65,14 +65,14 @@ public class RemindListener implements Listener
 		if(!event.getPlayer().hasPermission("duties.getreminder.onitemdrop") && !(Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(event.getPlayer(), "duties.getreminder.onitemdrop"))){return;}
 		
 		//event.getPlayer().sendMessage("Last drop time: " + Duties.LastDropReminderTime + " ; Now: " + event.getPlayer().getWorld().getTime());
-		if(!Duties.LastDropReminderTime.containsKey(event.getPlayer().getName()))
-			Duties.LastDropReminderTime.put(event.getPlayer().getName(), new Integer(0).longValue());
+		if(!Duties.LastDropReminderTime.containsKey(event.getPlayer().getUniqueId()))
+			Duties.LastDropReminderTime.put(event.getPlayer().getUniqueId(), new Integer(0).longValue());
 		if(Duties.Config.GetInteger("ReminderCooldown").longValue() != 0)
-			if( ( event.getPlayer().getWorld().getTime() - Duties.LastDropReminderTime.get(event.getPlayer().getName()) ) <= Duties.Config.GetInteger("ReminderCooldown").longValue() ){return;}
+			if( ( event.getPlayer().getWorld().getTime() - Duties.LastDropReminderTime.get(event.getPlayer().getUniqueId()) ) <= Duties.Config.GetInteger("ReminderCooldown").longValue() ){return;}
 		
 		event.getPlayer().sendMessage(Duties.Messages.GetString("Client.Tag") + Duties.Messages.GetString("Client.Reminder.ItemDrop"));
 		
-		Duties.LastDropReminderTime.put(event.getPlayer().getName(), event.getPlayer().getWorld().getTime());
+		Duties.LastDropReminderTime.put(event.getPlayer().getUniqueId(), event.getPlayer().getWorld().getTime());
 	}
 	
 	

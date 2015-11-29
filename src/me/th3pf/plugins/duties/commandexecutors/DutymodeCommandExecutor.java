@@ -21,7 +21,11 @@ public class DutymodeCommandExecutor implements CommandExecutor
 			try
 			{
 				//Own mode
-				if(!sender.hasPermission("duties.self.toggle") && !(Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(sender, "duties.self.toggle"))){TellSender(sender,updates.MissingPermission,true); return true;}
+				if(!sender.hasPermission("duties.self.toggle") && !(Duties.Config.GetBoolean("Vault.Permissions") && Duties.VaultAdapter.permission.has(sender, "duties.self.toggle")))
+				{
+					TellSender(sender, updates.MissingPermission, true); 
+					return true;
+				}
 				if (sender instanceof Player) 
 				{
 					ModeSwitcher actions = new ModeSwitcher((Player)sender);
@@ -45,6 +49,7 @@ public class DutymodeCommandExecutor implements CommandExecutor
 			catch(Exception ex)
 			{
 				sender.sendMessage(Duties.Messages.GetString("Client.Tag") + "An error occured while enabling duty mode.");
+				ex.printStackTrace();
 				return true;
 			}
 		}
